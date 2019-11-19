@@ -8,4 +8,5 @@ class ChoiceText(models.Model):
     choice_of = models.ForeignKey(AdventureText, related_name='requested_choice', on_delete=models.CASCADE)
     result_text = models.ForeignKey(AdventureText, on_delete=models.CASCADE)
 
-# class Stories(models.Model):
+class Stories(models.Model):
+    story = models.ForeignKey(AdventureText, on_delete=models.CASCADE)
