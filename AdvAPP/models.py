@@ -1,7 +1,7 @@
 from django.db import models
 
 class AdventureText(models.Model):
-    adv_text = models.textField()
+    adv_text = models.TextField()
 
 class ChoiceText(models.Model):
     choice_text = models.CharField(max_length=300)
