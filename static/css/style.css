@@ -1,0 +1,18 @@
+#nav a{color: black;
+        padding: 15px;
+        text-decoration: none;
+        display: inline-block;}
+#nav li{display: inline;}
+#nav ul{list-style-type: none;
+        margin: 0;}
+#nav a:hover{background-color: lightblue;}
+#nav {align-content: center;
+        text-align: center;}
+
+#page {align-content: center;
+        text-align: center;}
+
+h1 {align-content: center;
+        text-align: center;}
+
+body {background-color: gray;}
