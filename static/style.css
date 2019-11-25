@@ -12,7 +12,29 @@
 #page {align-content: center;
         text-align: center;}
 
+.container {margin: 0px auto;}
+
+.col, [class*="col-"] {
+    padding-left: 0;
+    padding-right: 0;
+    margin: auto;}
+
+.row {justify-content: center;}
+
 h1 {align-content: center;
         text-align: center;}
 
 body {background-color: lightgray;}
+
+#login {border-style: solid;
+        border-color: black;
+        border-width: 1px;
+        padding: 10px;
+        background-color: gray;
+        float: right;}
+
+#about {margin: 0px;
+        padding: 10px;
+        text-align: center;
+        border-style: solid;}
+
