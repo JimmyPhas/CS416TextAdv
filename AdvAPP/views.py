@@ -12,8 +12,8 @@ def home(request):
     return HttpResponse(template.render())
 
 def create(request):
-    template = loader.get_template('create.html')
-    return HttpResponse(template.render())
+    if request.method == 'POST':
+        text_body = request.post('story_text')
 
 def play(request):
     stories_list = Stories.objects.all()

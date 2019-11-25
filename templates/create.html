@@ -1,5 +1,32 @@
 {% extends 'base.html' %}
-{% block title %} Homepage {% endblock %}
+
 {% block content %}
-    <h1 id="page">Create A Story</h1>
+    <div id="inputForm">
+        <form action="{% url 'create' %}" method="post">{% csrf_token %}
+            Input Text: <textarea rows="10" cols="75" name="story_text" placeholder="Input story text here"></textarea><br>
+            Number of Choices: <input type="text" name="numChoices" placeholder="Number of Choices"><br>
+            <button on_click="addChoices()">Get Choice Input</button>
+            <div id="choiceFields"></div>
+
+        </form>
+    </div>
+    <script>
+
+        function addChoices(){
+            let choiceInputs = document.getElementByName("numChoices").value;
+            const numChoice = choiceInputs.parseInt();
+            if(isNaN(numChoice))
+                alert("Please enter a number.");
+            else
+            {
+                const options = document.getElementById("choiceFields");
+                       var list = "<ul>";
+                       for(i=0;i<numChoice;i++)
+                           list = list + "<li>Choice-" + (i + 1) + "<br><input type=\"text\" name=\"op" + (i + 1) +"\"></li>";
+                       list = list + "</ul><input type=\"button\" onclick=\"saveSegment();\" id=\"fillOptions\" value=\"Submit Question\"></form>";
+                       options.innerHTML = list;
+            }
+        }
+
+    </script>
 {% endblock %}
