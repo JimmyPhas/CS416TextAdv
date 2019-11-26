@@ -17,12 +17,14 @@ def create(request):
 
 def play(request):
     stories_list = Stories.objects.all()
-    # start_list = ChoiceText.objects.all().get(choice_text="Start").id
     start_list = ChoiceText.objects.all().filter(choice_text="Start").values_list('choice_of', flat=True)
     template = loader.get_template('play.html')
+    my_dict = dict(zip(start_list, stories_list))
+
     context = {
+        'my_dict' : my_dict,
         'stories_list' : stories_list,
-        'start_id': start_list
+        'start_list' : start_list
     }
     return HttpResponse(template.render(context, request))
 

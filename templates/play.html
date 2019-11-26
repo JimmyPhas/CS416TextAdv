@@ -3,16 +3,11 @@
 {% block content %}
     <h1 id="page">Play A Story</h1>
     <br> <br>
-
     <div id="stories">
     {% if stories_list %}
         <ul>
-
-        {% for stories in stories_list %}
-            {% for id in start_id %}
-                    <li><a href="/AdvAPP/start/{{ id }}/">{{ stories }} by: {{ stories.author }}</a></li>
-{#                    <li><a href="/AdvAPP/start/{{ id }}/">{{ stories.story_title }} by: {{ stories.author }}</a></li>#}
-            {% endfor %}
+        {% for id, value in my_dict.items %}
+            <li><a href="/AdvAPP/start/{{ id }}/">{{ value }} by: {{ value.author }}</a></li>
         {% endfor %}
         </ul>
         {% else %}
