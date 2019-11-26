@@ -2,11 +2,15 @@
 {% block title %} The Adventure Begins {% endblock %}
 {% block content %}
     <h1>{{ adventureText.adv_text }}</h1>
-    <ul>
-    {% for choicetext in adventureText.choicetext_set.all %}
-        <li><a href="/AdvAPP/{{ choicetext.result_text }}/">{{ choicetext.choice_text }}</a></li>
-{#        <li>{{ choicetext.choice_text }}</li>#}
-    {% endfor %}
-    </ul>
+    <br> <br>
+
+    <div id="choices">
+        <ul>
+        {% for choicetext in adventureText.choicetext_set.all %}
+            <li><a href="/AdvAPP/{{ choicetext.result_text }}/">{{ choicetext.choice_text }}</a></li>
+    {#        <li>{{ choicetext.choice_text }}</li>#}
+        {% endfor %}
+        </ul>
+    </div>
 
 {% endblock %}

@@ -3,8 +3,8 @@
 {% block content %}
     <h1 id="page">Play A Story</h1>
     <br> <br>
-    <div>
 
+    <div id="stories">
     {% if stories_list %}
         <ul>
         {% for stories in stories_list %}
@@ -15,7 +15,6 @@
         {% else %}
             <p>No stories are available.</p>
     {% endif %}
-
     </div>
 
 {% endblock %}

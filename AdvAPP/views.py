@@ -17,7 +17,7 @@ def create(request):
 
 def play(request):
     stories_list = Stories.objects.all()
-    start_list = AdventureText.objects.all().get(adv_text="start").id
+    start_list = ChoiceText.objects.all().get(choice_text="Start").choice_of.id
     template = loader.get_template('play.html')
     context = {
         'stories_list' : stories_list,
