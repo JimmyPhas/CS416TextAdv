@@ -1,15 +1,13 @@
 {% extends 'base.html' %}
-{% block title %} Homepage {% endblock %}
+{% block title %} Play {% endblock %}
 {% block content %}
     <h1 id="page">Play A Story</h1>
     <br> <br>
-
     <div id="stories">
     {% if stories_list %}
         <ul>
-        {% for stories in stories_list %}
-            <li><a href="/AdvAPP/start/{{ start_id }}/">{{ stories.story_title }} by: {{ stories.author }}</a></li>
-{#            <li><a href="{% url 'AdvAPP:playing' stories_id %}">{{ stories.story_title }} by: {{ stories.author }}</a></li>#}
+        {% for id, value in my_dict.items %}
+            <li><a href="/AdvAPP/start/{{ id }}/">{{ value }} by: {{ value.author }}</a></li>
         {% endfor %}
         </ul>
         {% else %}
