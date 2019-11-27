@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Create a Story{% endblock %}
+{% block content %}
+    <form method="post" name="new_story">{% csrf_token %}
+        Story Title:<input type="text" name="story_title" placeholder="Enter Story title here"><br>
+        Intro text:<br><textarea name="intro_input" cols="100" rows="10" placeholder="Write the introduction for your story here!"></textarea><br>
+        First text:<br><textarea name="text_input" cols="100" rows="10" placeholder="Write the first section of your story! Players will make decisions from this point."></textarea><br>
+        <input type="submit" value="Save Story">
+    </form>
+{% endblock %}

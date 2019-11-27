@@ -2,4 +2,10 @@
 {% block title %} Create {% endblock %}
 {% block content %}
     <h1 id="page">Create A Story</h1>
+    <form method="post" name="create_story">
+    {% csrf_token %}
+    Enter Story:<br><textarea name="text_input" cols="100" rows="10" placeholder="Write a section of a story here!"></textarea><br>
+    Enter Choice: <input type="text" name="text_result" placeholder="What choice leads to this part of the story?">
+    <input type="submit" value="Save Section">
+    </form>
 {% endblock %}

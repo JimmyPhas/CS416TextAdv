@@ -6,10 +6,15 @@
 
     <div id="choices">
         <ul>
+
         {% for choicetext in adventureText.choicetext_set.all %}
             <li><a href="/AdvAPP/{{ choicetext.result_text }}/">{{ choicetext.choice_text }}</a></li>
-    {#        <li>{{ choicetext.choice_text }}</li>#}
+
         {% endfor %}
+
+        <a href="/AdvAPP/create/{{ adventureText.story.pk }}/{{ adventureText.pk }}">Add new Option</a>
+
+
         </ul>
     </div>
 
