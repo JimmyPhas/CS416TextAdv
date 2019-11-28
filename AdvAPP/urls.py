@@ -1,5 +1,5 @@
 
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 app_name = 'AdvAPP'
@@ -11,4 +11,5 @@ urlpatterns = [
     path('play/', views.play, name='play'),
     path('start/<int:stories_id>/', views.start, name='start'),
     path('<int:result_text>/', views.playing, name='playing'),
+    path('authen/', include('authen.urls'))
 ]
