@@ -7,7 +7,11 @@
     {% if stories_list %}
         <ul>
         {% for id, value in my_dict.items %}
-            <li><a href="/AdvAPP/start/{{ id }}/">{{ value }} by: {{ value.author }}</a></li>
+            <form action="../edit/{{value}}" method="get">
+                <li><a href="/AdvAPP/{{ id }}/">{{ value }} by: {{ value.author }}</a></li>
+                <button type="submit" id="edit">Edit</button>
+            </form>
+            <br>
         {% endfor %}
         </ul>
         {% else %}

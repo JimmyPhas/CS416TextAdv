@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %} The Adventure Begins {% endblock %}
 {% block content %}
-    <h1>{{ adventureText.adv_text }}</h1>
+    <div id="adventure">{{ adventureText.adv_text }}</div>
     <br> <br>
 
     <div id="choices">
@@ -12,6 +12,7 @@
 
         {% endfor %}
 
+        <br> <br>
         <a href="/AdvAPP/create/{{ adventureText.story.pk }}/{{ adventureText.pk }}">Add new Option</a>
 
 

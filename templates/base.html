@@ -10,7 +10,9 @@
 </head>
 <body>
 
-    {% include "navbar.html" %}
+    {% block nav %}
+        {% include "navbar.html" %}
+    {% endblock %}
     {% block content %}
     {% endblock %}
 

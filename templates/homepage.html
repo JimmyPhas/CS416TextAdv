@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 {% block title %} Homepage {% endblock %}
 {% block content %}
-    <h1 id="page">Text Adventure Homepage</h1>
+    <h1 id="page">Choose Your Own Adventure Homepage</h1>
     <br><br>
     <div class="container">
+        <div class="col-lg-6 col-sm-12" id="about">
+            <p id="description">A Choose Your Own Adventure Story is a story where you can decide what happens. You determine the actions and decisions of the characters and lead them to the
+                ending.</p>
+            <p>In this website you can play stories that have already been created or you can create your very own story for others to play on this web site.</p>
+        </div>
         <div class="col-lg-6 col-sm-12" id="login">
             <form id="loginform" action="homepage.html" method="post">
                 <h2>Login</h2>
@@ -17,9 +22,6 @@
                 <br><br>
                 <a href="../register.html">Register</a>
             </form>
-        </div>
-        <div class="col-lg-6 col-sm-12" id="about">
-            <h2>about the site</h2>
         </div>
     </div>
 {% endblock %}

@@ -11,6 +11,8 @@
 
 #page {align-content: center;
         text-align: center;}
+#center {text-align: center;
+        align-content: center;}
 
 .container {margin: 0px auto;}
 
@@ -26,24 +28,62 @@ h1 {align-content: center;
 
 body {background-color: lightgray;}
 
-#login {border-style: solid;
+#about {border-style: solid;
         border-color: black;
         border-width: 1px;
         padding: 10px;
-        background-color: gray;
         float: right;
-        text-align: center;
-        align-content: center;}
+        background-color: LightSlateGrey;
+        padding: 15px;
+        font-size: 20px;
+        min-height: 280px;}
 
-#about {margin: 0px;
+#login {margin: 0px;
         padding: 10px;
         text-align: center;
-        border-style: solid;}
+        border-style: solid;
+        border-color: black;
+        border-width: 1px;
+        min-height: 280px;}
+
+#create {margin: 0px;
+        padding: 10px;
+        text-align: center;}
+#create textarea{overflow:hidden;
+        padding:10px;
+        width:75%;}
+#create select {width: 75%;
+        word-wrap: break-spaces !important;
+        white-space: normal;}
+@media screen and (max-width: 960px) {
+        #create textarea{height: 200px;}
+        #create select{height: 200px;}
+}
+@media screen and (max-width: 560px) {
+        #create textarea{height: 150px;}
+        #create select{height: 150px;}
+}
+#choice {width: 40%;
+        height: 50px;}
 
 #stories {text-align: center;
         align-content: center;}
+#stories ul {display: inline;}
 
 #choices {text-align: center;
-        align-content: center;}
+        align-content: center;
+        font-size: 2vw;}
+
+#adventure {text-align: center;
+        font-size: 3vw;
+        font-weight: bold;}
+
+#edit {display: inline;
+        background-color: steelblue;}
+#delete {background-color: firebrick;}
+#update {display: inline;}
+
+
+
 
 
