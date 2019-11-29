@@ -20,5 +20,4 @@ from django.urls import include, path
 urlpatterns = [
     path('AdvAPP/', include('AdvAPP.urls')),
     path('admin/', admin.site.urls),
-    path('authen/', include('authen.urls')),
 ]
