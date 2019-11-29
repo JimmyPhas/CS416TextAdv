@@ -5,7 +5,7 @@
     <div id="create">
         <h1>Create a New Story</h1>
         <form method="post" name="new_story">{% csrf_token %}
-            Story Title:<br><input type="text" name="story_title" placeholder="Enter Story title here"><br>
+            Story Title:<br><input type="text" name="story_title" placeholder="Enter Story title here" id="title"><br>
             Intro text:<br><textarea name="intro_input" cols="100" rows="10" placeholder="Write the introduction for your story here!"></textarea><br>
             First text:<br><textarea name="text_input" cols="100" rows="10" placeholder="Write the first section of your story! Players will make decisions from this point."></textarea><br>
             <br>

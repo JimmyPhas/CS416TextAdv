@@ -65,6 +65,8 @@ body {background-color: lightgray;}
 }
 #choice {width: 40%;
         height: 50px;}
+#title {width: 40%;
+        height: 50px;}
 
 #stories {text-align: center;
         align-content: center;}
