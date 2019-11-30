@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %} Full Outline {% endblock %}
+{% block nav %} {% include "navbar2.html" %} {% endblock %}
+{% block content %}
+    {% if user.is_authenticated %}
+    <h1 id="page">{{ story }}</h1>
+    <div id="center">
+        <form action="../../delete/{{"story"}}/{{ story.id }}" method="get">
+            <button type="submit" id="delete">Delete Story</button>
+        </form>
+        <form action="../../update/{{"story"}}/{{ story.id }}" method="get">
+            <button type="submit" id="update">Update Story</button>
+        </form>
+    </div>
+    <br> <br>
+    <div id="stories">
+    {% if story %}
+        <ol>
+        {% for adv in story.adventuretext_set.all %}
+            <li>{{ adv }}
+            <form action="../../delete/{{"adventure"}}/{{ adv.id }}" method="get">
+                <button type="submit" id="delete">Delete Adventure Text</button>
+            </form>
+            <form action="../../update/{{"adventure"}}/{{ adv.id }}" method="get">
+                <button type="submit" id="update">Update Adventure Text</button>
+            </form>
+                <ul>
+                {% for choice in adv.choicetext_set.all %}
+                    <li>{{ choice }}</li>
+                    <form action="../../delete/{{"choice"}}/{{ choice.id }}" method="get">
+                        <button type="submit" id="delete">Delete Choice Text</button>
+                    </form>
+                    <form action="../../update/{{"choice"}}/{{ choice.id }}" method="get" >
+                        <button type="submit" id="update">Update Choice Text</button>
+                    </form>
+                {% endfor %}
+                </ul>
+            </li>
+            <a href="/AdvAPP/create/{{ adv.story.pk }}/{{ adv.pk }}">Add new Option</a>
+            <br><br>
+        {% endfor %}
+        </ol>
+        {% else %}
+            <p>No stories are available.</p>
+    {% endif %}
+    </div>
+    {% else %}
+        <h1>Not logged in! Please Login or Register</h1>
+        <button><a href="{% url 'AdvAPP:authen:login' %}">Login</a></button>
+    {% endif %}
+{% endblock %}

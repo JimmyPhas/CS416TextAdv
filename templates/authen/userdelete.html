@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %} Delete {% endblock %}
+{% block nav %} {% include "navbar2.html" %} {% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+    <div id="center">
+        {% if del_type == "story" %}
+            <h2>The Story {{ story }} has been deleted.</h2>
+        {% elif del_type == "adventure" %}
+            <h2>The adventure text {{ adv_text }} has been deleted.</h2>
+        {% elif del_type == "choice" %}
+            <h2>The choice text {{ Choice_text }} has been deleted.</h2>
+        {% endif %}
+
+        <div>
+            <form action="../../play">
+                <button type="submit">Return to the Play page</button>
+            </form>
+        </div>
+    </div>
+    {% else %}
+        <h1>Not logged in! Please Login or Register</h1>
+        <button><a href="{% url 'AdvAPP:authen:login' %}">Login</a></button>
+    {% endif %}
+{% endblock %}
