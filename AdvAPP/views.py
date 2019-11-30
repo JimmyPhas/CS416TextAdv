@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.http import Http404
+from django.contrib.auth.models import User, auth
 
 from .models import Stories, AdventureText, ChoiceText
 from .forms import StoryForm, ChoiceForm

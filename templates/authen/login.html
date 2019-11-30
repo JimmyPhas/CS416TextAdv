@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block nav %} {% include "navbar2.html" %} {% endblock %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <h2>Login</h2>
+        Username:<input type="text" name="username" placeholder="Username"><br><br>
+        Password:<input type="password" name="password" placeholder="Password"><br><br>
+        <input type="submit" value="Login">
+        <br><br>
+        <button><a href="../authen/register/">Register</a></button>
+    </form>
+{% endblock %}

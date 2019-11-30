@@ -10,18 +10,21 @@
             <p>In this website you can play stories that have already been created or you can create your very own story for others to play on this web site.</p>
         </div>
         <div class="col-lg-6 col-sm-12" id="login">
-            <form id="loginform" action="homepage.html" method="post">
-                <h2>Login</h2>
-                Username:
-                <input type="text" placeholder="Username">
-                <br><br>
-                Password:
-                <input type="password" placeholder="Password">
-                <br><br>
-                <input type="submit" value="Login">
-                <br><br>
-                <a href="../authen/register/">Register</a>
-            </form>
+            {% if user.is_authenticated %}
+                <h1>Welcome {{ user.username }}!</h1>
+                <button onclick="{% url 'AdvAPP:authen:logout' %}">Logout</button>
+            {% else %}
+                <!--<form action="" method="post">{% csrf_token %}
+                    <h2>Login</h2>
+                    Username:<input type="text" name="username" placeholder="Username"><br><br>
+                    Password:<input type="password" name="password" placeholder="Password"><br><br>
+                    <input type="submit" value="Login">
+                    <br>
+                </form>-->
+                <button><a href="{% url 'AdvAPP:authen:login' %}">Login</a></button>
+                <button><a href="../authen/register/">Register</a></button>
+
+            {% endif %}
         </div>
     </div>
 {% endblock %}
