@@ -57,7 +57,7 @@ def logout(request):
 
 def user_stories(request):
     if request.user.is_authenticated:
-        username = request.user.get_username
+        username = request.user.get_username()
         stories_list = Stories.objects.all().filter(author=username)
         start_list = ChoiceText.objects.all().filter(choice_text="Start").values_list('choice_of', flat=True)
         #template = loader.get_template('authen/userstories.html')
@@ -75,7 +75,7 @@ def user_stories(request):
 def userCreate(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
-            user = request.user.get_username
+            user = request.user.get_username()
             story_title = request.POST.get("story_title")
             intro_text = request.POST.get("intro_input")
             next_text = request.POST.get("text_input")
@@ -152,3 +152,6 @@ def user_update(request, up_type, id):
                 'choice_text' : choice_text
             }
         return render(request, 'update.html', context)
+
+def homepage(request):
+    return render('homepage.html',request)
