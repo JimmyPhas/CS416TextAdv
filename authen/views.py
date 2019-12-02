@@ -94,7 +94,7 @@ def user_edit(request, story_title):
     context = {
         'story' : story,
     }
-    return render(request, 'edit.html', context)
+    return render(request, 'authen/useredit.html', context)
 
 def user_delete(request, del_type, id):
     if del_type == "story":
@@ -106,7 +106,7 @@ def user_delete(request, del_type, id):
     elif del_type == "choice":
         choice_text = ChoiceText.objects.get(pk=id)
         choice_text.delete()
-    return render(request, 'delete.html', { 'del_type' : del_type })
+    return render(request, 'authen/userdelete.html', { 'del_type' : del_type })
 
 def user_update(request, up_type, id):
     if request.method == 'POST':
@@ -132,7 +132,7 @@ def user_update(request, up_type, id):
             context = {
                 'story': choice_text.choice_of.story,
             }
-        return render(request, 'edit.html', context)
+        return render(request, 'authen/useredit.html', context)
     else:
         if up_type == "story":
             story = Stories.objects.get(pk=id)
@@ -152,7 +152,7 @@ def user_update(request, up_type, id):
                 'del_type': up_type,
                 'choice_text' : choice_text
             }
-        return render(request, 'update.html', context)
+        return render(request, 'authen/userupdate.html', context)
 
 def homepage(request):
     return render(request, 'homepage.html')

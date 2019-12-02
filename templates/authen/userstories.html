@@ -3,23 +3,25 @@
 {% block content %}
     {% if user.is_authenticated %}
         <h1>Hello {{ user.username }}</h1>
-        {% if stories_list %}
-        <ul>
-        {% for id, value in my_dict.items %}
-            <form action="../edit/{{value}}" method="get">
-                <li><a href="/AdvAPP/{{ id }}/">{{ value }} by: {{ value.author }}</a></li>
-                <button type="submit" id="edit">Edit</button>
-            </form>
-            <br>
-        {% endfor %}
-        </ul>
-        <button><a href="{% url 'AdvAPP:authen:user_create' %}">Create New Story</a></button>
-        {% else %}
-            <p>No stories are available. Create a story!</p>
-            <button><a href="{% url 'AdvAPP:authen:user_create' %}">New Story</a></button>
-        {% endif %}
-    {% else %}
-        <h1>Not logged in! Please Login or Register</h1>
-        <button><a href="{% url 'AdvAPP:authen:login' %}">Login</a></button>
-    {% endif %}
+        <div id="maincontent">
+            {% if stories_list %}
+            <ul>
+            {% for id, value in my_dict.items %}
+                <form action="../edit/{{value}}" method="get">
+                    <li><a href="/AdvAPP/{{ id }}/">{{ value }} by: {{ value.author }}</a></li>
+                    <button type="submit" id="edit">Edit</button>
+                </form>
+                <br>
+            {% endfor %}
+            </ul>
+            <button><a href="{% url 'AdvAPP:authen:user_create' %}">Create New Story</a></button>
+            {% else %}
+                <p>No stories are available. Create a story!</p>
+                <button><a href="{% url 'AdvAPP:authen:user_create' %}">New Story</a></button>
+            {% endif %}
+            {% else %}
+                <h1>Not logged in! Please Login or Register</h1>
+                <button><a href="{% url 'AdvAPP:authen:login' %}">Login</a></button>
+            {% endif %}
+        </div>
 {% endblock %}

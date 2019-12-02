@@ -85,6 +85,9 @@ body {background-color: lightgray;}
 #delete {background-color: firebrick;}
 #update {display: inline;}
 
+#maincontent {margin: 15px;
+        padding: 10px;}
+
 
 
 

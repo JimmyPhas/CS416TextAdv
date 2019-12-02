@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 {% block title %} Create {% endblock %}
 {% block content %}
-    <h1>You are not logged in!</h1>
-    <h3>To create a story you must be logged into a user account.</h3>
-    <button><a href="{% url 'AdvAPP:authen:login' %}">Login</a></button>
-    <button><a href="{% url 'AdvAPP:authen:register' %}">Register</a></button>
+        <h1>You are not logged in!</h1>
+        <br>
+    <div id="center">
+        <h3>To create a story you must be logged into a user account.</h3>
+        <button><a href="{% url 'AdvAPP:authen:login' %}">Login</a></button>
+        <button><a href="{% url 'AdvAPP:authen:register' %}">Register</a></button>
+    </div>
 {% endblock %}

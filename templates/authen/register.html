@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 {% block nav %} {% include "navbar2.html" %} {% endblock %}
 {% block content %}
-    <form method="post">{% csrf_token %}
-        First Name:<input type="text" name="first_name" placeholder="Enter first name here"><br>
-        Last Name:<input type="text" name="last_name" placeholder="Enter last name here"><br>
-        E-mail:<input type="text" name="email" placeholder="Enter E-mail here"><br>
-        Username:<input type="text" name="username" placeholder="Enter username here"><br>
-        Password:<input type="password" name="password1"><br>
-        Confirm Password:<input type="password" name="password2"><br>
-        <input type="submit" value="Create User">
-    </form>
+    <div id="maincontent">
+        <form method="post">{% csrf_token %}
+            First Name:<input type="text" name="first_name" placeholder="Enter first name here"><br>
+            Last Name:<input type="text" name="last_name" placeholder="Enter last name here"><br>
+            E-mail:<input type="text" name="email" placeholder="Enter E-mail here"><br>
+            Username:<input type="text" name="username" placeholder="Enter username here"><br>
+            Password:<input type="password" name="password1"><br>
+            Confirm Password:<input type="password" name="password2"><br>
+            <input type="submit" value="Create User">
+        </form>
+    </div>
 {% endblock %}
