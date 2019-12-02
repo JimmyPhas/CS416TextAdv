@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% block nav %}
+
+        {% include 'navbar.html' %}
+
+{% endblock %}
 {% block title %} Play {% endblock %}
 {% block content %}
     <h1 id="page">Play A Story</h1>
@@ -8,8 +13,15 @@
         <ul>
         {% for id, value in my_dict.items %}
             <form action="../edit/{{value}}" method="get">
+            {% if user.is_authenticated %}
+                <li><a href="/AdvAPP/authen/{{ id }}/">{{ value }} by: {{ value.author }}</a></li>
+
+                {% if user.get_username == value.author %}
+                    <button type="submit" id="edit">Edit</button>
+                {% endif %}
+            {% else %}
                 <li><a href="/AdvAPP/{{ id }}/">{{ value }} by: {{ value.author }}</a></li>
-                <button type="submit" id="edit">Edit</button>
+            {% endif %}
             </form>
             <br>
         {% endfor %}

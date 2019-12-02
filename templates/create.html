@@ -1,25 +1,8 @@
 {% extends 'base.html' %}
 {% block title %} Create {% endblock %}
-{% block nav %} {% include "navbar2.html" %} {% endblock %}
 {% block content %}
-    <h1 id="page">Add to {{ story }}</h1>
-    <div id="create">
-        <form method="post" name="create_story">
-            {% csrf_token %}
-            Enter Choice: <br> <input type="text" name="text_result" placeholder="What choice leads to this part of the story?" id="choice">
-            <br>
-            Enter Story:<br><textarea name="text_input" cols="100" rows="10" placeholder="Write a section of a story here!"></textarea><br>
-            <br>
-            Select Story:
-            <br>
-            <select name="select_input">
-                <option value="null">Select an already created section.</option>
-                {% for adv in story.adventuretext_set.all %}
-                    <option value="{{ adv.pk }}">{{ adv }}</option>
-                {% endfor %}
-            </select>
-            <br>
-            <input type="submit" value="Save Section">
-        </form>
-    </div>
+    <h1>You are not logged in!</h1>
+    <h3>To create a story you must be logged into a user account.</h3>
+    <button><a href="{% url 'AdvAPP:authen:login' %}">Login</a></button>
+    <button><a href="{% url 'AdvAPP:authen:register' %}">Register</a></button>
 {% endblock %}

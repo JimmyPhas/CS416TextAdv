@@ -12,7 +12,8 @@
         <div class="col-lg-6 col-sm-12" id="login">
             {% if user.is_authenticated %}
                 <h1>Welcome {{ user.username }}!</h1>
-                <button onclick="{% url 'AdvAPP:authen:logout' %}">Logout</button>
+                <button><a href={% url 'AdvAPP:authen:user_stories' %}>My Stories</a></button>
+                <button><a href="{% url 'AdvAPP:authen:logout' %}">Logout</a></button>
             {% else %}
                 <button><a href="{% url 'AdvAPP:authen:login' %}">Login</a></button>
                 <button><a href="../authen/register/">Register</a></button>

@@ -14,5 +14,7 @@ urlpatterns = [
     path('edit/<str:story_title>/', views.user_edit, name='user_edit'),
     path('update/<str:up_type>/<int:id>', views.user_update, name='user_update'),
     path('delete/<str:del_type>/<int:id>', views.user_delete, name='user_delete'),
-    path('homepage/', views.homepage, name='auth_homepage')
+    path('homepage/', views.homepage, name='auth_homepage'),
+    path('play/', views.play, name="auth_play"),
+    path('<int:result_text>/', views.playing, name='playing')
 ]

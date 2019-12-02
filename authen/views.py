@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.http import Http404
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.models import User, auth
 from django.template import loader
@@ -154,4 +155,24 @@ def user_update(request, up_type, id):
         return render(request, 'update.html', context)
 
 def homepage(request):
-    return render('homepage.html',request)
+    return render(request, 'homepage.html')
+
+def play(request):
+    stories_list = Stories.objects.all()
+    start_list = ChoiceText.objects.all().filter(choice_text="Start").values_list('choice_of', flat=True)
+    template = loader.get_template('play.html')
+    my_dict = dict(zip(start_list, stories_list))
+
+    context = {
+        'my_dict' : my_dict,
+        'stories_list' : stories_list,
+        'start_list' : start_list
+    }
+    return HttpResponse(template.render(context, request))
+
+def playing(request, result_text):
+    try:
+        adventureText = AdventureText.objects.get(pk=result_text)
+    except AdventureText.DoesNotExist:
+        raise Http404("Story does not exist")
+    return render(request, 'playing.html', {'adventureText': adventureText})

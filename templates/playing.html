@@ -8,12 +8,19 @@
         <ul>
 
         {% for choicetext in adventureText.choicetext_set.all %}
-            <li><a href="/AdvAPP/{{ choicetext.result_text }}/">{{ choicetext.choice_text }}</a></li>
-
+            {% if user.is_authenticated %}
+                <li><a href="/AdvAPP/authen/{{ choicetext.result_text }}/">{{ choicetext.choice_text }}</a></li>
+            {% else %}
+                <li><a href="/AdvAPP/{{ choicetext.result_text }}/">{{ choicetext.choice_text }}</a></li>
+            {% endif %}
         {% endfor %}
 
-        <br> <br>
-        <a href="/AdvAPP/create/{{ adventureText.story.pk }}/{{ adventureText.pk }}">Add new Option</a>
+        <br>
+        {% if user.is_authenticated %}
+            {% if user.username == adventureText.story.author %}
+            <a href="/AdvAPP/create/{{ adventureText.story.pk }}/{{ adventureText.pk }}">Add new Option</a>
+            {% endif %}
+        {% endif %}
 
 
         </ul>
