@@ -8,18 +8,30 @@
             {% csrf_token %}
             Enter Choice: <br> <input type="text" name="text_result" placeholder="What choice leads to this part of the story?" id="choice">
             <br>
-            Enter Story:<br><textarea name="text_input" cols="100" rows="10" placeholder="Write a section of a story here!"></textarea><br>
+            Enter Story:<br><textarea name="text_input" id="write" cols="100" rows="10" placeholder="Write a section of a story here!"></textarea><br>
             <br>
             Select Story:
             <br>
-            <select name="select_input">
+            <select name="select_input" id="select">
                 <option value="null">Select an already created section.</option>
                 {% for adv in story.adventuretext_set.all %}
                     <option value="{{ adv.pk }}">{{ adv }}</option>
                 {% endfor %}
             </select>
             <br>
-            <input type="submit" value="Save Section">
+            <input type="submit" value="Save Section" onclick="return checkinputs()">
         </form>
     </div>
+
+    <script>
+    function checkinputs() {
+        if (document.getElementById("write").value != null && document.getElementById('select').value != "null"){
+            alert("Please write a section of the story or select a section of the story, not both!")
+            return false
+        }
+        else
+            return true
+    }
+
+    </script>
 {% endblock %}
