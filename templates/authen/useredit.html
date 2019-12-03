@@ -11,6 +11,13 @@
         <form action="../../update/{{"story"}}/{{ story.id }}" method="get">
             <button type="submit" id="update">Update Story</button>
         </form>
+        {% if story.published %}
+        {% else %}
+            <button><a href="../../publish/{{ story.id }}/">Publish Story</a></button>
+        <!--form action="../../publish/{#{ story.id }#}/" method="get">
+            <input type="submit" id="publish" value="Publish Story">
+        </form-->
+        {% endif %}
     </div>
     <br> <br>
     <div id="stories">

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block nav %}{% include 'navbar.html' %}{% endblock %}
+{% block content %}
+    <h3>Once you publish your story it will be viewable by all users of the website.</h3>
+    <h3>You can still edit your story after it has been published, however you should have a near complete story when you publish.</h3>
+    <form action="{% url 'AdvAPP:authen:publish' %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Publish">
+    </form>
+{% endblock %}

@@ -6,7 +6,7 @@ from django.contrib.auth.models import User, auth
 
 from .models import Stories, AdventureText, ChoiceText
 from .forms import StoryForm, ChoiceForm
-# Create your views here.
+# Cre  ate your views here.
 
 def home(request):
     template = loader.get_template('homepage.html')

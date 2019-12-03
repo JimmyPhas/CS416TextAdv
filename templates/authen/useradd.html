@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %} Create {% endblock %}
 {% if user.is_authenticated %}
-{% block nav %} {% include "navbar.html" %} {% endblock %}
+{% block nav %} {% include "navbar2.html" %} {% endblock %}
 {% block content %}
     <h1 id="page">Add to {{ story }}</h1>
     <div id="create">
@@ -11,15 +11,14 @@
             <br>
             Enter Story:<br><textarea name="text_input" cols="100" rows="10" placeholder="Write a section of a story here!"></textarea><br>
             <br>
-            Select Story:
+            {#Select Story:#}
             <br>
-            <select name="select_input">
+            <!--select name="select_input">
                 <option value="null">Select an already created section.</option>
-                {% for adv in story.adventuretext_set.all %}
-                    <option value="{{ adv.pk }}">{{ adv }}</option>
-                {% endfor %}
-            </select>
-            <br>
+                  {# for adv in story.adventuretext_set.all #}
+                     <option value="{#{ adv.pk }#}">{#{ adv }#}</option>
+                {# endfor #}
+            </select-->
             <input type="submit" value="Save Section">
         </form>
     </div>

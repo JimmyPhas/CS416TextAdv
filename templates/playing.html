@@ -18,7 +18,9 @@
         <br>
         {% if user.is_authenticated %}
             {% if user.username == adventureText.story.author %}
-            <a href="/AdvAPP/create/{{ adventureText.story.pk }}/{{ adventureText.pk }}">Add new Option</a>
+                {% if adventureText.choice_set.result_text != "Start" %}
+                <a href="/AdvAPP/authen/create/{{ adventureText.story.pk }}/{{ adventureText.pk }}">Add new Option</a>
+                {% endif %}
             {% endif %}
         {% endif %}
 
