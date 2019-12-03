@@ -120,7 +120,6 @@ def user_update(request, up_type, id):
         if up_type == "story":
             story = Stories.objects.get(pk=id)
             story.story_title = request.POST.get("story_title")
-            story.author = request.POST.get("story_author")
             story.save()
             context = {
                 'story': story,
@@ -169,6 +168,8 @@ def homepage(request):
         return render(request, 'homepage.html', {'tweets' : getTweets()})
     except tweepy.error.RateLimitError:
         raise RateLimitError("API call limit exceeded")
+    except tweepy.error.TweepError:
+        raise ConnectionError("Max retries exceeded with url")
     return render(request, 'homepage.html')
 
 def play(request):
@@ -216,8 +217,9 @@ def publish(request, story_id):
         story = Stories.objects.get(pk=story_id)
         story.published = True
         story.save()
-        tweet_story = story.author + " just published a new story on the site called " + story.story_title + " check it out at "
-        postTweet(tweet_story)
+        start_id = str(ChoiceText.objects.get(choice_text="Start", choice_of__story=story_id).choice_of.id)
+        tweet_text = story.author + " just published a new story on the site called " + story.story_title + " at JimmyPhas.pythonanywhere.com/AdvAPP/" + start_id
+        postTweet(tweet_text)
         return redirect('AdvAPP:authen:auth_play')
     else:
         return render(request, 'authen/publish.html', {'story_id':story_id})
