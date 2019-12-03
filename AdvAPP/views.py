@@ -5,6 +5,7 @@ from django.http import Http404
 import twitter
 import tweepy
 from tweepy import OAuthHandler, RateLimitError
+from config import *
 from requests_oauthlib import OAuth1Session
 
 
@@ -13,10 +14,6 @@ from django.contrib.auth.models import User, auth
 from .models import Stories, AdventureText, ChoiceText
 from .forms import StoryForm, ChoiceForm
 # Create your views here.
-consumer_key = 'Aea5RH4m2QYkTlN0zSU6O0aur'
-consumer_secret = 'qA9F83KR2f7KX8HMzwkJ42jsSMrdK0w0M7YZNq7AfdkV9pZh3T'
-access_token = '1200133441636974593-MZkoJxVjhdLXSwp12iYBE2cM7LcmJE'
-access_token_secret = 'Npw8qtKN5lLHoAL2bm9I0WyPIgsaDHIJtaP51MPdfuqBb'
 
 def getTweets():
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
