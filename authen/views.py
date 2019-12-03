@@ -3,6 +3,8 @@ from django.http import Http404
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.models import User, auth
 from django.template import loader
+from tweepy import RateLimitError
+
 from AdvAPP.models import Stories, AdventureText, ChoiceText
 import tweepy
 from config import *
@@ -192,13 +194,21 @@ def user_add(request, story_id, text_id):
     if request.method == 'POST':
         story = Stories.objects.get(pk=story_id)
         prev_text = AdventureText.objects.get(pk=text_id)
-        new_text = request.POST.get("text_input")
-        new_choice = request.POST.get("text_result")
-        adventure_text = AdventureText.objects.create(story=story, adv_text=new_text)
-        choice_to = ChoiceText.objects.create(choice_text=new_choice, choice_of=prev_text, result_text=adventure_text.id)
-        return redirect('AdvAPP:authen:playing', adventure_text.id)
+        if (request.POST.get("select_input") == "null"):
+            new_text = request.POST.get("text_input")
+            new_choice = request.POST.get("text_result")
+            adventure_text = AdventureText.objects.create(story=story, adv_text=new_text)
+            ChoiceText.objects.create(choice_text=new_choice, choice_of=prev_text, result_text=adventure_text.id)
+            return redirect('AdvAPP:authen:playing', adventure_text.id)
+        else:
+            new_text = request.POST.get("select_input")
+            new_choice = request.POST.get("text_result")
+            adventure_text = AdventureText.objects.get(pk=new_text)
+            ChoiceText.objects.create(choice_text=new_choice, choice_of=prev_text, result_text=adventure_text.id)
+            return redirect('AdvAPP:authen:playing', adventure_text.id)
     else:
-        return render(request, 'authen/useradd.html',{'story_id':story_id, 'text_id':text_id})
+        origin_story = Stories.objects.get(pk=story_id)
+        return render(request, 'authen/useradd.html',{'story_id':story_id, 'text_id':text_id, 'story' : origin_story})
 
 def publish(request, story_id):
     if request.method == 'POST':
