@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.models import User, auth
 from django.template import loader
 from AdvAPP.models import Stories, AdventureText, ChoiceText
-from . import views
+
 
 def register(request):
     if request.method == 'POST':
@@ -61,7 +61,7 @@ def user_stories(request):
     if request.user.is_authenticated:
         username = request.user.get_username()
         stories_list = Stories.objects.all().filter(author=username)
-        start_list = ChoiceText.objects.all().filter(choice_text="Start").values_list('choice_of', flat=True)
+        start_list = ChoiceText.objects.all().filter(choice_text="Start", choice_of__story__author=username).values_list('choice_of', flat=True)
         #template = loader.get_template('authen/userstories.html')
         my_dict = dict(zip(start_list, stories_list))
 
@@ -86,7 +86,6 @@ def userCreate(request):
             first_text = AdventureText.objects.create(story=new_story, adv_text=next_text)
             ChoiceText.objects.create(choice_text='Start', choice_of=start_text, result_text=first_text.pk)
             return redirect('AdvAPP:authen:playing', start_text.id)
-            #return render(request, 'playing.html', {'adventureText': start_text})
     else:
         return render(request, 'authen/usercreate.html')
 
