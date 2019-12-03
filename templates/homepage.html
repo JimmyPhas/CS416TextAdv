@@ -12,22 +12,20 @@
         <div class="col-lg-6 col-sm-12" id="login">
             {% if user.is_authenticated %}
                 <h1>Welcome {{ user.username }}!</h1>
-                <button><a href={% url 'AdvAPP:authen:user_stories' %}>My Stories</a></button>
-            {% else %}
-                <form method="POST">
-                {% csrf_token %}
-                    <input type="text" name="user" placeholder="View Twitter user timeline">
-                    <br>
-                    <input type="submit" value="View Timeline">
-                </form>
-{#                <a href="{% url "social:begin:twitter" %}" class="btn btn-social-icon btn-twitter"></a>#}
-                <br>
-                <ul id="tweets">
-                    {% for tweet in tweets.tweets %}
-                        <li class="tweettext">{{ tweet.status }}</li>
-                    {% endfor %}
-                </ul>
             {% endif %}
+            <form method="POST">
+            {% csrf_token %}
+                <input type="text" name="user" placeholder="View Twitter user timeline">
+                <br>
+                <input type="submit" value="View Timeline">
+            </form>
+{#                <a href="{% url "social:begin:twitter" %}" class="btn btn-social-icon btn-twitter"></a>#}
+            <br>
+            <ul id="tweets">
+                {% for tweet in tweets.tweets %}
+                    <li class="tweettext">{{ tweet.status }}</li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 {% endblock %}

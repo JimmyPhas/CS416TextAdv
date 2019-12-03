@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.models import User, auth
 from django.template import loader
 from AdvAPP.models import Stories, AdventureText, ChoiceText
+import tweepy
+from config import *
 from . import views
 
 def register(request):
@@ -157,6 +159,13 @@ def user_update(request, up_type, id):
         return render(request, 'authen/userupdate.html', context)
 
 def homepage(request):
+    try:
+        if request.method == 'POST':
+            user = request.POST.get('user')
+            return render(request, 'homepage.html', {'tweets': getTweetsUser(user)})
+        return render(request, 'homepage.html', {'tweets' : getTweets()})
+    except tweepy.error.RateLimitError:
+        raise RateLimitError("API call limit exceeded")
     return render(request, 'homepage.html')
 
 def play(request):
@@ -196,6 +205,37 @@ def publish(request, story_id):
         story = Stories.objects.get(pk=story_id)
         story.published = True
         story.save()
+        tweet_story = story.author + " just published a new story on the site called " + story.story_title + " check it out at "
+        postTweet(tweet_story)
         return redirect('AdvAPP:authen:auth_play')
     else:
         return render(request, 'authen/publish.html', {'story_id':story_id})
+
+def postTweet(up_status):
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth)
+    api.update_status(up_status)
+
+def getTweets():
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth)
+    public_tweets = api.home_timeline(count=10)
+    tweets = []
+    for tweet in public_tweets:
+        status = tweet.text
+        tweets.append({'status': status})
+    return {'tweets':tweets}
+
+def getTweetsUser(user):
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth)
+    public_tweets = api.user_timeline(user, count=10)
+    tweets = []
+    for tweet in public_tweets:
+        status = tweet.text
+        print(status)
+        tweets.append({'status': status})
+    return {'tweets':tweets}

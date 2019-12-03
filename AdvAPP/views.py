@@ -2,17 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.http import Http404
-import twitter
 import tweepy
-from tweepy import OAuthHandler, RateLimitError
+from tweepy import RateLimitError
 from config import *
-from requests_oauthlib import OAuth1Session
-
-
-from django.contrib.auth.models import User, auth
-
 from .models import Stories, AdventureText, ChoiceText
-from .forms import StoryForm, ChoiceForm
 # Create your views here.
 
 def getTweets():
@@ -37,12 +30,6 @@ def getTweetsUser(user):
         print(status)
         tweets.append({'status': status})
     return {'tweets':tweets}
-
-def postTweet(up_status):
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_token_secret)
-    api = tweepy.API(auth)
-    api.update_status(up_status)
 
 def home(request):
     try:
