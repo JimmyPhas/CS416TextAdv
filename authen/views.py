@@ -3,7 +3,13 @@ from django.http import Http404
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.models import User, auth
 from django.template import loader
+from tweepy import RateLimitError
+
 from AdvAPP.models import Stories, AdventureText, ChoiceText
+
+import tweepy
+from config import *
+from . import views
 
 
 def register(request):
@@ -156,6 +162,13 @@ def user_update(request, up_type, id):
         return render(request, 'authen/userupdate.html', context)
 
 def homepage(request):
+    try:
+        if request.method == 'POST':
+            user = request.POST.get('user')
+            return render(request, 'homepage.html', {'tweets': getTweetsUser(user)})
+        return render(request, 'homepage.html', {'tweets' : getTweets()})
+    except tweepy.error.RateLimitError:
+        raise RateLimitError("API call limit exceeded")
     return render(request, 'homepage.html')
 
 def play(request):
@@ -182,19 +195,58 @@ def user_add(request, story_id, text_id):
     if request.method == 'POST':
         story = Stories.objects.get(pk=story_id)
         prev_text = AdventureText.objects.get(pk=text_id)
-        new_text = request.POST.get("text_input")
-        new_choice = request.POST.get("text_result")
-        adventure_text = AdventureText.objects.create(story=story, adv_text=new_text)
-        choice_to = ChoiceText.objects.create(choice_text=new_choice, choice_of=prev_text, result_text=adventure_text.id)
-        return redirect('AdvAPP:authen:playing', adventure_text.id)
+        if (request.POST.get("select_input") == "null"):
+            new_text = request.POST.get("text_input")
+            new_choice = request.POST.get("text_result")
+            adventure_text = AdventureText.objects.create(story=story, adv_text=new_text)
+            ChoiceText.objects.create(choice_text=new_choice, choice_of=prev_text, result_text=adventure_text.id)
+            return redirect('AdvAPP:authen:playing', adventure_text.id)
+        else:
+            new_text = request.POST.get("select_input")
+            new_choice = request.POST.get("text_result")
+            adventure_text = AdventureText.objects.get(pk=new_text)
+            ChoiceText.objects.create(choice_text=new_choice, choice_of=prev_text, result_text=adventure_text.id)
+            return redirect('AdvAPP:authen:playing', adventure_text.id)
     else:
-        return render(request, 'authen/useradd.html',{'story_id':story_id, 'text_id':text_id})
+        origin_story = Stories.objects.get(pk=story_id)
+        return render(request, 'authen/useradd.html',{'story_id':story_id, 'text_id':text_id, 'story' : origin_story})
 
 def publish(request, story_id):
     if request.method == 'POST':
         story = Stories.objects.get(pk=story_id)
         story.published = True
         story.save()
+        tweet_story = story.author + " just published a new story on the site called " + story.story_title + " check it out at "
+        postTweet(tweet_story)
         return redirect('AdvAPP:authen:auth_play')
     else:
         return render(request, 'authen/publish.html', {'story_id':story_id})
+
+def postTweet(up_status):
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth)
+    api.update_status(up_status)
+
+def getTweets():
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth)
+    public_tweets = api.home_timeline(count=10)
+    tweets = []
+    for tweet in public_tweets:
+        status = tweet.text
+        tweets.append({'status': status})
+    return {'tweets':tweets}
+
+def getTweetsUser(user):
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth)
+    public_tweets = api.user_timeline(user, count=10)
+    tweets = []
+    for tweet in public_tweets:
+        status = tweet.text
+        print(status)
+        tweets.append({'status': status})
+    return {'tweets':tweets}
