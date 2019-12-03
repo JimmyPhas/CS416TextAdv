@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.models import User, auth
 from django.template import loader
 from AdvAPP.models import Stories, AdventureText, ChoiceText
+from . import views
 
 def register(request):
     if request.method == 'POST':
@@ -18,20 +19,20 @@ def register(request):
             if User.objects.filter(username = user).exists():
                 print("Username is taken, must be unique")
                 messages.info(request, 'Username is taken, must be unique')
-                return redirect('register')
+                return redirect('AdvAPP:authen:register')
             elif User.objects.filter(email = e_mail).exists():
                 print("Email is taken, must be unique")
                 messages.info(request, 'Email is taken, must be unique')
-                return redirect('register')
+                return redirect('AdvAPP:authen:register')
             else:
                 User.objects.create_user(first_name=firstname, last_name=lastname, email=e_mail, username=user, password=password1)
                 print("A user has been created!")
         else:
             print("Passwords do not match!")
             messages.info(request, 'Passwords do not match!')
-            return redirect('register')
+            return redirect('AdvAPP:authen:register')
 
-        return redirect('AdvAPP:homepage')
+        return redirect('AdvAPP:authen:auth_homepage')
 
     else:
         return render(request, 'authen/register.html')
@@ -48,7 +49,7 @@ def login(request):
             return redirect('AdvAPP:authen:user_stories')
         else:
             messages.info(request, 'Invalid credentials')
-            return redirect('login')
+            return redirect('AdvAPP:authen:login')
     else:
         return render(request, 'authen/login.html')
 
@@ -84,7 +85,8 @@ def userCreate(request):
             start_text = AdventureText.objects.create(story=new_story, adv_text=intro_text)
             first_text = AdventureText.objects.create(story=new_story, adv_text=next_text)
             ChoiceText.objects.create(choice_text='Start', choice_of=start_text, result_text=first_text.pk)
-            return render(request, 'playing.html', {'adventureText': start_text})
+            return redirect('AdvAPP:authen:playing', start_text.id)
+            #return render(request, 'playing.html', {'adventureText': start_text})
     else:
         return render(request, 'authen/usercreate.html')
 
@@ -176,3 +178,24 @@ def playing(request, result_text):
     except AdventureText.DoesNotExist:
         raise Http404("Story does not exist")
     return render(request, 'playing.html', {'adventureText': adventureText})
+
+def user_add(request, story_id, text_id):
+    if request.method == 'POST':
+        story = Stories.objects.get(pk=story_id)
+        prev_text = AdventureText.objects.get(pk=text_id)
+        new_text = request.POST.get("text_input")
+        new_choice = request.POST.get("text_result")
+        adventure_text = AdventureText.objects.create(story=story, adv_text=new_text)
+        choice_to = ChoiceText.objects.create(choice_text=new_choice, choice_of=prev_text, result_text=adventure_text.id)
+        return redirect('AdvAPP:authen:playing', adventure_text.id)
+    else:
+        return render(request, 'authen/useradd.html',{'story_id':story_id, 'text_id':text_id})
+
+def publish(request, story_id):
+    if request.method == 'POST':
+        story = Stories.objects.get(pk=story_id)
+        story.published = True
+        story.save()
+        return redirect('AdvAPP:authen:auth_play')
+    else:
+        return render(request, 'authen/publish.html',{'story_id':story_id})

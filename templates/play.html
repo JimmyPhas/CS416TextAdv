@@ -12,6 +12,7 @@
     {% if stories_list %}
         <ul>
         {% for id, value in my_dict.items %}
+            {% if value.published %}
             <form action="../edit/{{value}}" method="get">
             {% if user.is_authenticated %}
                 <li><a href="/AdvAPP/authen/{{ id }}/">{{ value }} by: {{ value.author }}</a></li>
@@ -23,6 +24,7 @@
                 <li><a href="/AdvAPP/{{ id }}/">{{ value }} by: {{ value.author }}</a></li>
             {% endif %}
             </form>
+            {% endif %}
             <br>
         {% endfor %}
         </ul>
