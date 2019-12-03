@@ -3,5 +3,11 @@
         <li><a href="./homepage"> HomePage</a> </li>
         <li><a href="./play"> Play</a></li>
         <li><a href="./create"> Create</a> </li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'AdvAPP:authen:logout' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'AdvAPP:authen:login' %}">Login</a></li>
+            <li><a href="../authen/register/">Register</a></li>
+        {% endif %}
     </ul>
 </div>
