@@ -18,5 +18,6 @@ urlpatterns = [
     path('homepage/', views.homepage, name='auth_homepage'),
     path('play/', views.play, name="auth_play"),
     path('<int:result_text>/', views.playing, name='playing'),
-    path('publish/<int:story_id>/', views.publish, name="publish")
+    path('publish/<int:story_id>/', views.publish, name="publish"),
+    path('publish/', views.publish, name="pub2")
 ]

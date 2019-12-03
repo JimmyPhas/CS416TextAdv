@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %} Full Outline {% endblock %}
 {% block nav %} {% include "navbar2.html" %} {% endblock %}
 {% block content %}
@@ -13,7 +14,7 @@
         </form>
         {% if story.published %}
         {% else %}
-            <button><a href="../../publish/{{ story.id }}/">Publish Story</a></button>
+            <button><a href="AdvAPP/authen/publish/{{ story.id }}/">Publish Story</a></button>
         <!--form action="../../publish/{#{ story.id }#}/" method="get">
             <input type="submit" id="publish" value="Publish Story">
         </form-->
@@ -43,7 +44,7 @@
                 {% endfor %}
                 </ul>
             </li>
-            <a href="/AdvAPP/create/{{ adv.story.pk }}/{{ adv.pk }}">Add new Option</a>
+            <a href="/AdvAPP/authen/create/{{ adv.story.pk }}/{{ adv.pk }}">Add new Option</a>
             <br><br>
         {% endfor %}
         </ol>

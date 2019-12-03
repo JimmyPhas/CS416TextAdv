@@ -198,4 +198,4 @@ def publish(request, story_id):
         story.save()
         return redirect('AdvAPP:authen:auth_play')
     else:
-        return render(request, 'authen/publish.html',{'story_id':story_id})
+        return render(request, 'authen/publish.html', {'story_id':story_id})

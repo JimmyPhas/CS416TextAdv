@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block nav %}{% include 'navbar.html' %}{% endblock %}
 {% block content %}
-    <h3>Once you publish your story it will be viewable by all users of the website.</h3>
-    <h3>You can still edit your story after it has been published, however you should have a near complete story when you publish.</h3>
-    <form action="{% url 'AdvAPP:authen:publish' %}" method="post">
+    <h1 id="page">{{ story }}</h1>
+    <h3 id="page">Once you publish your story it will be viewable by all users of the website.</h3>
+    <h3 id="page">You can still edit your story after it has been published, however you should have a near complete story when you publish.</h3>
+    <form action="{% url 'AdvAPP:authen:publish' story_id %}" method="post">
     {% csrf_token %}
     <input type="submit" value="Publish">
     </form>
