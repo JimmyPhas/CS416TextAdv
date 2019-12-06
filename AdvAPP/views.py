@@ -2,8 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.http import Http404
-import tweepy
-from tweepy import RateLimitError
+try:
+    import tweepy
+    from tweepy import RateLimitError
+except:
+    print("tweepy import error")
 from config import *
 from .models import Stories, AdventureText, ChoiceText
 # Create your views here.
@@ -37,9 +40,10 @@ def home(request):
             user = request.POST.get('user')
             return render(request, 'homepage.html', {'tweets': getTweetsUser(user)})
         return render(request, 'homepage.html', {'tweets' : getTweets()})
-    except tweepy.error.RateLimitError:
-        raise RateLimitError("API call limit exceeded")
-    return render(request, 'homepage.html')
+    except:
+        print("error with tweepy  API")
+    status = "Problem importing tweepy API"
+    return render(request, 'homepage.html', {'tweets': status})
 
 def create(request):
     return render(request, 'create.html')

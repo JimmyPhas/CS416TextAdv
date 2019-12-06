@@ -6,7 +6,7 @@
 {% block content %}
     <h1 id="page">Add to {{ story }}</h1>
     <div id="create">
-        <form method="post" name="create_story">
+        <form method="post" name="create_story" id="section">
             {% csrf_token %}
             Enter Choice: <br> <input type="text" name="text_result" placeholder="What choice leads to this part of the story?" id="choice" required>
             <br>
@@ -18,31 +18,54 @@
                     <option value="{{ adv.pk }}">{{ adv }}</option>
                 {% endfor %}
             </select>
-        <br>
-            <input type="submit" value="Save Section" onclick="return checkinputs()">
+            <br>
+            <input type="button" value="Save Section" onclick="return checkinputs()">
+            <button id="edit" onclick="window.location.href ='../../edit/{{ title }}';">Back to Edit</button>
         </form>
     </div>
     <script>
         function checkinputs() {
-            var str = document.getElementById("write").value
-            var newStr = $.trim(str)
-            var choice = document.getElementById("choice").value
-            var newChoice = $.trim(choice)
+            var str = document.getElementById("write").value;
+            var newStr = $.trim(str);
+            var choice = document.getElementById("choice").value;
+            var newChoice = $.trim(choice);
             if (document.getElementById("write").value != "" && document.getElementById('select').value != "null"){
-                alert("Please write a section of the story or select a section of the story, not both!")
+                alert("Please write a section of the story or select a section of the story, not both!");
                 return false
             }
             else if (newStr == "" && document.getElementById('select').value == "null") {
-                alert("Please write a section of the story or select a section of the story.")
+                alert("Please write a section of the story or select a section of the story.");
                 return false
             }
             else if (newChoice == "") {
-                alert("Please enter a choice.")
+                alert("Please enter a choice.");
                 return false
             }
-            else
+            else {
+                saveSection();
                 return true
+            }
         }
+
+        function saveSection(){
+            const section = $("#section").serialize();
+
+            $.ajax({
+                type: 'POST',
+                data: section,
+                success: function (data) {
+                    console.log(data);
+                    alert("Section has been saved!")
+                }
+            });
+
+            resetBox();
+        }
+
+        function resetBox(){
+            $("#section")[0].reset();
+        }
+
     </script>
 {% endblock %}
 {% endif %}

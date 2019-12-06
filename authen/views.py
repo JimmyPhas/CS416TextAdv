@@ -3,11 +3,14 @@ from django.http import Http404
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.models import User, auth
 from django.template import loader
-from tweepy import RateLimitError
 
 from AdvAPP.models import Stories, AdventureText, ChoiceText
 
-import tweepy
+try:
+    import tweepy
+    from tweepy import RateLimitError
+except:
+    print("tweepy import error")
 from config import *
 from . import views
 
@@ -166,11 +169,10 @@ def homepage(request):
             user = request.POST.get('user')
             return render(request, 'homepage.html', {'tweets': getTweetsUser(user)})
         return render(request, 'homepage.html', {'tweets' : getTweets()})
-    except tweepy.error.RateLimitError:
-        raise RateLimitError("API call limit exceeded")
-    except tweepy.error.TweepError:
-        raise ConnectionError("Max retries exceeded with url")
-    return render(request, 'homepage.html')
+    except:
+        print("error with tweepy  API")
+    status = "Problem importing tweepy API"
+    return render(request, 'homepage.html', {'tweets': status})
 
 def play(request):
     stories_list = Stories.objects.all()
@@ -210,7 +212,8 @@ def user_add(request, story_id, text_id):
             return redirect('AdvAPP:authen:playing', adventure_text.id)
     else:
         origin_story = Stories.objects.get(pk=story_id)
-        return render(request, 'authen/useradd.html',{'story_id':story_id, 'text_id':text_id, 'story' : origin_story})
+        title = origin_story.story_title
+        return render(request, 'authen/useradd.html',{'story_id':story_id, 'text_id':text_id, 'story' : origin_story, 'title': title})
 
 def publish(request, story_id):
     if request.method == 'POST':
